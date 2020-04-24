@@ -33,16 +33,21 @@ const parseRawDataToObjectArray = rawData => {
  * @returns {{scheduleList: Array[], supportDay: String}}
  */
 const executeScheduler = () => {
-    const supportDay = process.env.SUPPORT_DAY;
 
     checkForEndOfMonth();
     checkForFullSchedule();
     assignEngineersForSupport();
 
-    return {
-            supportDay,
-            scheduleList: formatEngineersListByDate(getEngineersList())
-    }
+    const scheduleResult = {
+        supportDay: process.env.SUPPORT_DAY,
+        scheduleList: formatEngineersListByDate(getEngineersList())
+    };
+
+    // this the counter for the current working day, after we finished the assignment
+    // for the next call we will use the next day's value.
+    process.env.SUPPORT_DAY++;
+
+    return scheduleResult;
 };
 
 /**
@@ -78,10 +83,6 @@ const assignEngineersForSupport = () => {
         engineersList[index2].addSupportDate(days.filter(day => day.value === supportDay)[0].name);
 
         writeToFile(JSON.stringify(engineersList), absolutePath);
-
-        // this the counter for the current working day, after we finished the assignment
-        // for the next call we will use the next day's value.
-        process.env.SUPPORT_DAY++;
     }
 };
 
