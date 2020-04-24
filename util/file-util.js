@@ -1,5 +1,9 @@
 const fs = require('fs');
-
+/**
+ * Util function that reads data from a given file.
+ * @param path
+ * @returns {*}
+ */
 const readFromFile = path => {
     if (path) {
         try {
@@ -12,6 +16,11 @@ const readFromFile = path => {
     }
 };
 
+/**
+ * Util function that writes a String to a given file.
+ * @param data
+ * @param path
+ */
 const writeToFile = (data, path) => {
     if (data !== undefined && data !== '') {
         try {
@@ -24,6 +33,10 @@ const writeToFile = (data, path) => {
     }
 };
 
+/**
+ * Used to copy a fresh version of initial testing data to the data.json file which will be used to read and write to
+ * in the process of assigning engineers, it is used in resetting application data.
+ */
 const populateDataFile = () => {
     const originalFileAbsolutePath = process.cwd() + process.env.ORIGINAL_TEST_FILE;
     const dataFileAbsolutePath = process.cwd() + process.env.DATA_FILE;
