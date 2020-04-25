@@ -22,7 +22,7 @@ const readFromFile = path => {
  * @param path
  */
 const writeToFile = (data, path) => {
-    if (data !== undefined && data !== '') {
+    if (data !== undefined && data !== '' && path !== '') {
         try {
             fs.writeFileSync(path, data, (err, data) => {
                 console.log('Objects written to file');
@@ -30,6 +30,8 @@ const writeToFile = (data, path) => {
         } catch (err) {
             throw new Error(`Could not write objects to file, ${err.message}`);
         }
+    } else {
+        throw new Error(`Could not write objects to file, data or path missing`);
     }
 };
 
